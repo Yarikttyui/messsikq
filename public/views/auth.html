@@ -1,0 +1,117 @@
+﻿<section class="auth-screen" id="authScreen">
+  <div class="auth-background" aria-hidden="true">
+    <div class="auth-prism" id="authPrism"></div>
+  </div>
+  <div class="auth-container">
+    <div class="auth-box">
+      <header class="auth-header">
+        <div class="auth-logo">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <rect width="40" height="40" rx="12" fill="url(#logo-gradient)"/>
+            <path d="M12 20L18 26L28 14" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <defs>
+              <linearGradient id="logo-gradient" x1="0" y1="0" x2="40" y2="40">
+                <stop offset="0%" stop-color="#00E5FF"/>
+                <stop offset="100%" stop-color="#3B82F6"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <h1 class="auth-title">Orion</h1>
+        <p class="auth-subtitle">Десктопный мессенджер</p>
+      </header>
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-target="login">
+          <span>Вход</span>
+        </button>
+        <button class="auth-tab" data-target="register">
+          <span>Регистрация</span>
+        </button>
+      </div>
+      <form id="loginForm" class="auth-form active">
+        <div class="form-group">
+          <label class="form-label">Имя пользователя</label>
+          <input 
+            type="text" 
+            id="loginUsername"
+            class="form-input" 
+            name="username" 
+            minlength="3" 
+            maxlength="32" 
+            required 
+            placeholder="Введите ваше имя пользователя"
+            autocomplete="username"
+          >
+        </div>
+        <div class="form-group">
+          <label class="form-label">Пароль</label>
+          <input 
+            type="password"
+            id="loginPassword" 
+            class="form-input" 
+            name="password" 
+            minlength="6" 
+            required 
+            placeholder="Введите ваш пароль"
+            autocomplete="current-password"
+          >
+        </div>
+        <button type="submit" class="auth-button primary">
+          <span>Войти</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 12l4-4-4-4"/>
+          </svg>
+        </button>
+        <p class="auth-hint">
+          Нет аккаунта? 
+          <button type="button" class="auth-link" data-switch="register">Создать</button>
+        </p>
+      </form>
+      <form id="registerForm" class="auth-form">
+        <div class="form-group">
+          <label class="form-label">Имя пользователя</label>
+          <input 
+            type="text"
+            id="registerUsername" 
+            class="form-input" 
+            name="username" 
+            minlength="3" 
+            maxlength="32" 
+            required 
+            placeholder="Выберите имя пользователя"
+            autocomplete="username"
+          >
+          <span class="form-help">3-32 символа, буквы и цифры</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Пароль</label>
+          <input 
+            type="password"
+            id="registerPassword" 
+            class="form-input" 
+            name="password" 
+            minlength="6" 
+            required 
+            placeholder="Создайте пароль"
+            autocomplete="new-password"
+          >
+          <span class="form-help">Минимум 6 символов</span>
+        </div>
+        <button type="submit" class="auth-button primary">
+          <span>Создать аккаунт</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 12l4-4-4-4"/>
+          </svg>
+        </button>
+        <p class="auth-hint">
+          Уже есть аккаунт? 
+          <button type="button" class="auth-link" data-switch="login">Войти</button>
+        </p>
+      </form>
+      <div class="auth-message" id="authMessage"></div>
+    </div>
+    <footer class="auth-footer">
+      <p>Orion Messenger</p>
+    </footer>
+  </div>
+</section>

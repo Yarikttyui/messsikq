@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Генератор рингтонов для ORION</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #0f172a;
+      color: white;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    button {
+      padding: 16px 32px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    button:hover {
+      transform: scale(1.05);
+    }
+    .ringtone {
+      background: linear-gradient(135deg, #6366f1, #ec4899);
+      color: white;
+    }
+    .ringback {
+      background: linear-gradient(135deg, #10b981, #14b8a6);
+      color: white;
+    }
+    audio {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔔 Генератор звуков для звонков</h1>
+  <button class="ringtone" onclick="generateAndDownloadRingtone()">
+    📞 Сгенерировать ringtone.mp3 (входящий звонок)
+  </button>
+  <button class="ringback" onclick="generateAndDownloadRingback()">
+    📲 Сгенерировать ringback.mp3 (исходящий звонок)
+  </button>
+  <audio id="preview" controls></audio>
+  <script>
+    async function generateAndDownloadRingtone() {
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const duration = 2;
+      const sampleRate = audioContext.sampleRate;
+      const buffer = audioContext.createBuffer(2, sampleRate * duration, sampleRate);
+      for (let channel = 0; channel < 2; channel++) {
+        const data = buffer.getChannelData(channel);
+        for (let i = 0; i < data.length; i++) {
+          const t = i / sampleRate;
+          if ((t >= 0 && t < 0.4) || (t >= 0.5 && t < 0.9)) {
+            const freq1 = 440;
+            const freq2 = 880;
+            data[i] = (
+              Math.sin(2 * Math.PI * freq1 * t) * 0.3 +
+              Math.sin(2 * Math.PI * freq2 * t) * 0.15
+            );
+          } else {
+            data[i] = 0;
+          }
+        }
+      }
+      await downloadBuffer(buffer, audioContext, 'ringtone.mp3');
+    }
+    async function generateAndDownloadRingback() {
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const duration = 3;
+      const sampleRate = audioContext.sampleRate;
+      const buffer = audioContext.createBuffer(2, sampleRate * duration, sampleRate);
+      for (let channel = 0; channel < 2; channel++) {
+        const data = buffer.getChannelData(channel);
+        for (let i = 0; i < data.length; i++) {
+          const t = i / sampleRate;
+          if ((t >= 0 && t < 1.0) || (t >= 2.0 && t < 3.0)) {
+            const freq1 = 480;
+            const freq2 = 620;
+            data[i] = (
+              Math.sin(2 * Math.PI * freq1 * t) * 0.2 +
+              Math.sin(2 * Math.PI * freq2 * t) * 0.2
+            );
+          } else {
+            data[i] = 0;
+          }
+        }
+      }
+      await downloadBuffer(buffer, audioContext, 'ringback.mp3');
+    }
+    async function downloadBuffer(buffer, audioContext, filename) {
+      const wav = audioBufferToWav(buffer);
+      const blob = new Blob([wav], { type: 'audio/wav' });
+      const url = URL.createObjectURL(blob);
+      const preview = document.getElementById('preview');
+      preview.src = url;
+      preview.loop = true;
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename.replace('.mp3', '.wav');
+      a.click();
+      alert(`✅ Файл ${filename.replace('.mp3', '.wav')} сохранён!\n\nПоместите его в папку public/sounds/`);
+    }
+    function audioBufferToWav(buffer) {
+      const length = buffer.length * buffer.numberOfChannels * 2 + 44;
+      const arrayBuffer = new ArrayBuffer(length);
+      const view = new DataView(arrayBuffer);
+      const channels = [];
+      let offset = 0;
+      let pos = 0;
+      const setUint16 = (data) => { view.setUint16(pos, data, true); pos += 2; };
+      const setUint32 = (data) => { view.setUint32(pos, data, true); pos += 4; };
+      setUint32(0x46464952);
+      setUint32(length - 8);
+      setUint32(0x45564157);
+      setUint32(0x20746d66); 
+      setUint32(16);
+      setUint16(1);
+      setUint16(buffer.numberOfChannels);
+      setUint32(buffer.sampleRate);
+      setUint32(buffer.sampleRate * 2 * buffer.numberOfChannels);
+      setUint16(buffer.numberOfChannels * 2);
+      setUint16(16);
+      setUint32(0x61746164);
+      setUint32(length - pos - 4);
+      for (let i = 0; i < buffer.numberOfChannels; i++) {
+        channels.push(buffer.getChannelData(i));
+      }
+      while (pos < length) {
+        for (let i = 0; i < buffer.numberOfChannels; i++) {
+          let sample = Math.max(-1, Math.min(1, channels[i][offset]));
+          sample = sample < 0 ? sample * 0x8000 : sample * 0x7FFF;
+          view.setInt16(pos, sample, true);
+          pos += 2;
+        }
+        offset++;
+      }
+      return arrayBuffer;
+    }
+  </script>
+</body>
+</html>

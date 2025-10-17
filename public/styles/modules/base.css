@@ -1,0 +1,13 @@
+.hidden {
+  display: none !important;
+}
+.orion-shell {
+  display: grid;
+  grid-template-columns: var(--rail-width) var(--inbox-width) 1fr;
+  width: 100vw;
+  height: 100vh;
+  background: var(--bg-primary);
+}
+.orion-shell.info-hidden {
+  grid-template-columns: var(--rail-width) var(--inbox-width) 1fr;
+}

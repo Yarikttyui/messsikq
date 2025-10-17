@@ -1,0 +1,695 @@
+﻿<div class="modal hidden" id="profileModal">
+  <div class="modal-content profile-modal-content">
+    <button type="button" class="icon-btn modal-close-btn" data-close aria-label="Close">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    <div class="profile-modal-header">
+      <h2>Настройки профиля</h2>
+      <p class="profile-modal-subtitle">Управление аккаунтом и присутствием</p>
+    </div>
+    <div class="profile-modal-tabs">
+      <button class="profile-tab active" data-tab="general">Общие</button>
+      <button class="profile-tab" data-tab="appearance">Оформление</button>
+      <button class="profile-tab" data-tab="privacy">Приватность</button>
+      <button class="profile-tab" data-tab="security">Безопасность</button>
+    </div>
+    <div class="profile-modal-body">
+      <!-- General Tab -->
+      <div class="profile-tab-content active" data-content="general">
+        <form id="profileForm">
+          <div class="profile-avatar-section">
+            <div class="profile-avatar-wrapper">
+              <div class="avatar avatar-large" id="profileAvatarPreview"></div>
+              <button type="button" class="avatar-edit-btn" id="profileAvatarEditBtn" aria-label="Edit avatar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                </svg>
+              </button>
+              <input type="file" id="profileAvatarInput" accept="image/png,image/jpeg,image/webp" hidden>
+            </div>
+            <div class="profile-avatar-actions">
+              <button type="button" class="btn-secondary" id="uploadAvatarBtn">Загрузить фото</button>
+              <button type="button" class="btn-ghost" id="profileAvatarRemoveBtn">Удалить</button>
+            </div>
+          </div>
+          <div class="form-section">
+            <h3 class="form-section-title">Личная информация</h3>
+            <div class="form-grid">
+              <label class="form-label">
+                <span class="label-text">Отображаемое имя</span>
+                <input type="text" name="displayName" class="form-input" minlength="2" maxlength="100" required>
+              </label>
+              <label class="form-label">
+                <span class="label-text">Имя пользователя</span>
+                <input type="text" class="form-input" id="profileUsername" disabled>
+                <span class="form-hint">Ваш уникальный идентификатор (только чтение)</span>
+              </label>
+              <label class="form-label full-width">
+                <span class="label-text">Статус</span>
+                <input type="text" name="statusMessage" class="form-input" maxlength="160" placeholder="О чём вы думаете?">
+                <span class="form-hint"><span id="statusCharCount">0</span>/160 символов</span>
+              </label>
+              <label class="form-label full-width">
+                <span class="label-text">О себе</span>
+                <textarea name="bio" class="form-textarea" rows="4" maxlength="500" placeholder="Расскажите о себе..."></textarea>
+                <span class="form-hint"><span id="bioCharCount">0</span>/500 символов</span>
+              </label>
+            </div>
+          </div>
+          <div class="form-section">
+            <h3 class="form-section-title">Присутствие</h3>
+            <label class="form-checkbox">
+              <input type="checkbox" name="showOnlineStatus" checked>
+              <span class="checkbox-label">Показывать статус онлайн</span>
+              <span class="checkbox-hint">Другие видят когда вы активны</span>
+            </label>
+            <label class="form-checkbox">
+              <input type="checkbox" name="showLastSeen" checked>
+              <span class="checkbox-label">Показывать время последнего посещения</span>
+              <span class="checkbox-hint">Дайте знать когда вы были онлайн</span>
+            </label>
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn-ghost" data-close>Отмена</button>
+            <button type="submit" class="btn-primary">Сохранить изменения</button>
+          </div>
+        </form>
+      </div>
+      <!-- Appearance Tab -->
+      <div class="profile-tab-content" data-content="appearance">
+        <div class="form-section">
+          <h3 class="form-section-title">Тема</h3>
+          <div class="theme-selector">
+            <button class="theme-card active" data-theme="dark">
+              <div class="theme-preview theme-dark"></div>
+              <span>Тёмная</span>
+            </button>
+            <button class="theme-card" data-theme="light">
+              <div class="theme-preview theme-light"></div>
+              <span>Светлая</span>
+            </button>
+            <button class="theme-card" data-theme="auto">
+              <div class="theme-preview theme-auto"></div>
+              <span>Авто</span>
+            </button>
+          </div>
+        </div>
+        <div class="form-section">
+          <h3 class="form-section-title">Акцентный цвет</h3>
+          <div class="color-picker-grid">
+            <button class="color-swatch active" data-color="#00E5FF" aria-label="Голубой"></button>
+            <button class="color-swatch" data-color="#3B82F6" aria-label="Синий"></button>
+            <button class="color-swatch" data-color="#8B5CF6" aria-label="Фиолетовый"></button>
+            <button class="color-swatch" data-color="#EC4899" aria-label="Розовый"></button>
+            <button class="color-swatch" data-color="#F43F5E" aria-label="Красный"></button>
+            <button class="color-swatch" data-color="#10B981" aria-label="Зелёный"></button>
+            <button class="color-swatch" data-color="#F59E0B" aria-label="Оранжевый"></button>
+            <button class="color-swatch" data-color="#6366F1" aria-label="Индиго"></button>
+          </div>
+        </div>
+        <div class="form-section">
+          <h3 class="form-section-title">Отображение</h3>
+          <label class="form-checkbox">
+            <input type="checkbox" name="compactMode">
+            <span class="checkbox-label">Компактный режим</span>
+            <span class="checkbox-hint">Уменьшить отступы между сообщениями</span>
+          </label>
+          <label class="form-checkbox">
+            <input type="checkbox" name="showAvatars" checked>
+            <span class="checkbox-label">Показывать аватары</span>
+            <span class="checkbox-hint">Отображать аватары пользователей в сообщениях</span>
+          </label>
+        </div>
+      </div>
+      <!-- Privacy Tab -->
+      <div class="profile-tab-content" data-content="privacy">
+        <div class="form-section">
+          <h3 class="form-section-title">Кто может...</h3>
+          <div class="privacy-option">
+            <label class="form-label">
+              <span class="label-text">Отправлять вам личные сообщения</span>
+              <select class="form-select">
+                <option value="everyone">Все</option>
+                <option value="contacts">Только контакты</option>
+                <option value="nobody">Никто</option>
+              </select>
+            </label>
+          </div>
+          <div class="privacy-option">
+            <label class="form-label">
+              <span class="label-text">Добавлять вас в группы</span>
+              <select class="form-select">
+                <option value="everyone">Все</option>
+                <option value="contacts">Только контакты</option>
+                <option value="nobody">Никто</option>
+              </select>
+            </label>
+          </div>
+          <div class="privacy-option">
+            <label class="form-label">
+              <span class="label-text">Видеть ваше фото профиля</span>
+              <select class="form-select">
+                <option value="everyone">Все</option>
+                <option value="contacts">Только контакты</option>
+                <option value="nobody">Никто</option>
+              </select>
+            </label>
+          </div>
+        </div>
+        <div class="form-section">
+          <h3 class="form-section-title">Уведомления о прочтении</h3>
+          <label class="form-checkbox">
+            <input type="checkbox" name="sendReadReceipts" checked>
+            <span class="checkbox-label">Отправлять уведомления о прочтении</span>
+            <span class="checkbox-hint">Дайте знать когда вы прочитали сообщения</span>
+          </label>
+        </div>
+        <div class="form-section">
+          <h3 class="form-section-title">Заблокированные пользователи</h3>
+          <div class="blocked-users-list">
+            <p class="empty-state-text">Нет заблокированных пользователей</p>
+          </div>
+        </div>
+      </div>
+      <!-- Security Tab -->
+      <div class="profile-tab-content" data-content="security">
+        <div class="form-section">
+          <h3 class="form-section-title">Смена пароля</h3>
+          <form id="passwordForm">
+            <label class="form-label">
+              <span class="label-text">Текущий пароль</span>
+              <input type="password" name="currentPassword" class="form-input" autocomplete="current-password">
+            </label>
+            <label class="form-label">
+              <span class="label-text">Новый пароль</span>
+              <input type="password" name="newPassword" class="form-input" autocomplete="new-password">
+            </label>
+            <label class="form-label">
+              <span class="label-text">Подтвердите новый пароль</span>
+              <input type="password" name="confirmPassword" class="form-input" autocomplete="new-password">
+            </label>
+            <button type="submit" class="btn-primary">Обновить пароль</button>
+          </form>
+        </div>
+        <div class="form-section">
+          <h3 class="form-section-title">Активные сессии</h3>
+          <div class="sessions-list">
+            <div class="session-card active-session">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+              </svg>
+              <div class="session-info">
+                <div class="session-name">Windows · Chrome</div>
+                <div class="session-meta">Текущая сессия • Активна сейчас</div>
+              </div>
+              <span class="session-badge">Активна</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-section danger-zone">
+          <h3 class="form-section-title">Опасная зона</h3>
+          <button type="button" class="btn-danger" id="deleteAccountBtn">Удалить аккаунт</button>
+          <p class="form-hint">Это действие нельзя отменить. Все ваши данные будут безвозвратно удалены.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal hidden" id="groupModal">
+  <div class="modal-content">
+          <h2>Создать группу</h2>
+      <p class="modal-subtitle">Начать новую групповую беседу</p>
+  </div>
+</div>
+<div class="modal hidden" id="directModal">
+  <div class="modal-content">
+    <h2>Новый личный чат</h2>
+    <form id="directForm">
+      <label>Имя пользователя или ID
+        <input type="text" name="username" minlength="3" maxlength="64" required placeholder="Введите @username или ID">
+      </label>
+      <div class="modal-actions">
+        <button type="button" class="ghost" data-close>Отменить</button>
+        <button type="submit" class="primary">Написать</button>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="modal hidden" id="joinModal">
+  <div class="modal-content">
+    <h2>Присоединиться по коду</h2>
+    <form id="joinForm">
+      <label>Код беседы
+        <input type="text" name="code" minlength="5" maxlength="16" required placeholder="C123ABC456">
+      </label>
+      <div class="modal-actions">
+        <button type="button" class="ghost" data-close>Отменить</button>
+        <button type="submit" class="primary">Присоединиться</button>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="modal hidden" id="memberModal">
+  <div class="modal-content member-modal">
+    <button type="button" class="ghost tiny modal-close" data-close>×</button>
+    <div class="member-modal-header">
+      <div class="avatar member-avatar" id="memberProfileAvatar"></div>
+      <div class="member-modal-info">
+        <h3 id="memberProfileName"></h3>
+        <p id="memberProfileStatus"></p>
+        <span class="member-modal-presence" id="memberProfilePresence"></span>
+      </div>
+    </div>
+    <p class="member-modal-bio" id="memberProfileBio"></p>
+          <div class="member-actions">
+        <button type="button" class="btn-primary" id="memberMessageBtn">Отправить сообщение</button>
+        <button type="button" class="btn-ghost" id="memberViewProfileBtn">Просмотр профиля</button>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-ghost" data-close>Закрыть</button>
+      </div>
+    <section class="member-modal-invite hidden" id="memberProfileInviteSection">
+      <h4>Пригласить в беседу</h4>
+      <select id="memberProfileInviteSelect" aria-label="Select conversation for invite"></select>
+      <button type="button" class="primary" id="memberProfileInviteBtn">Отправить приглашение</button>
+    </section>
+  </div>
+</div>
+<div class="media-viewer hidden" id="mediaViewer">
+  <div class="media-viewer-backdrop" data-media-close></div>
+  <div class="media-viewer-content">
+    <button class="ghost tiny media-viewer-close" data-media-close>×</button>
+    <img id="mediaViewerImage" alt="" class="hidden">
+    <video id="mediaViewerVideo" controls class="hidden"></video>
+    <div class="media-viewer-footer">
+      <span id="mediaViewerCaption"></span>
+      <a id="mediaViewerDownload" class="ghost tiny" download target="_blank" rel="noreferrer noopener">Скачать</a>
+    </div>
+  </div>
+</div>
+<div class="modal hidden" id="conversationModal">
+  <div class="modal-content conversation-modal">
+    <h2>Настройки беседы</h2>
+    <form id="conversationForm">
+      <div class="conversation-avatar-grid">
+        <div class="avatar conversation-avatar" id="conversationAvatarPreview"></div>
+        <div class="avatar-upload">
+          <label class="ghost file-upload">
+            <input type="file" id="conversationAvatarInput" accept="image/*" hidden>
+            Загрузить аватар
+          </label>
+          <button type="button" class="ghost tiny" id="conversationAvatarRemoveBtn">Удалить аватар</button>
+        </div>
+      </div>
+      <label>Название
+        <input type="text" id="conversationTitleInput" minlength="3" maxlength="100" required>
+      </label>
+      <label>Описание
+        <textarea id="conversationDescriptionInput" rows="3" maxlength="500" placeholder="Кратко опишите цель беседы"></textarea>
+      </label>
+      <label class="switch">
+        <input type="checkbox" id="conversationNotificationsToggle" checked>
+        <span class="switch-label">Включить уведомления</span>
+      </label>
+      <section class="conversation-access hidden" id="conversationAccessSection">
+        <h3>Участники беседы</h3>
+        <p class="conversation-access__hint">Убирайте участников или меняйте папки беседы, если у вас есть права.</p>
+        <div class="conversation-member-manage" id="conversationMemberManageList"></div>
+      </section>
+      <div class="modal-actions">
+        <button type="button" class="ghost" data-close>Отменить</button>
+        <button type="submit" class="primary">Сохранить</button>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="modal hidden" id="forwardModal">
+  <div class="modal-content">
+    <h2>Переслать сообщение</h2>
+    <form id="forwardForm">
+      <label>Выберите беседу
+        <select id="forwardConversationSelect" required aria-label="Select conversation"></select>
+      </label>
+      <label>Имя пользователя или ID
+        <input type="text" id="forwardUserInput" placeholder="Например: sky.user">
+      </label>
+      <label>Комментарий
+        <textarea id="forwardCommentInput" rows="2" maxlength="4000" placeholder="Добавьте комментарий к пересылке (необязательно)"></textarea>
+      </label>
+      <div class="modal-actions">
+        <button type="button" class="ghost" data-close>Отменить</button>
+        <button type="submit" class="primary">Переслать</button>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="modal hidden" id="folderModal">
+  <div class="modal-content">
+    <h2 id="folderModalTitle">Новая папка</h2>
+    <form id="folderForm">
+      <label>Название папки
+        <input type="text" id="folderTitleInput" minlength="2" maxlength="60" required>
+      </label>
+      <label>Цвет
+        <input type="color" id="folderColorInput" value="#2a97f5">
+      </label>
+      <div class="modal-actions">
+        <button type="button" class="ghost" data-close>Отменить</button>
+        <button type="submit" class="primary">Сохранить</button>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="modal hidden" id="favoritesModal">
+  <div class="modal-content favorites-modal">
+    <button type="button" class="ghost tiny modal-close" data-close>×</button>
+    <h2>Сохранённые сообщения</h2>
+    <p class="favorites-hint">Здесь собраны избранные сообщения из всех бесед.</p>
+    <div class="favorites-list" id="favoritesList"></div>
+  </div>
+</div>
+<div class="reaction-menu hidden" id="reactionMenu"></div>
+<div class="context-menu hidden" id="messageContextMenu"></div>
+<div class="call-overlay hidden" id="callOverlay">
+  <div class="call-overlay-backdrop" data-call-close></div>
+  <div class="call-panel">
+    <div class="call-header">
+      <div>
+        <h2 id="callTitle">Групповой звонок</h2>
+        <p id="callSubtitle">Подготавливаем подключение участников...</p>
+      </div>
+      <button type="button" class="ghost tiny" id="callCloseBtn">×</button>
+    </div>
+    <div class="call-body" id="callBody">
+      <div class="call-participants" id="callParticipants"></div>
+      <div class="call-media" id="callMedia"></div>
+    </div>
+    <div class="call-controls">
+      <button type="button" class="call-btn" id="callMicToggle" data-active="true">Микрофон</button>
+      <button type="button" class="call-btn" id="callScreenToggle">Экран</button>
+      <button type="button" class="call-btn end" id="callLeaveBtn">Завершить</button>
+    </div>
+  </div>
+</div>
+<div class="modal hidden" id="joinByInviteModal">
+  <div class="modal-content">
+    <h2>Присоединиться по ссылке</h2>
+    <form id="inviteForm">
+      <label>Пригласительная ссылка
+        <input type="text" name="invite" required placeholder="https://skywave.chat/invite/...">
+      </label>
+      <div class="modal-actions">
+        <button type="button" class="ghost" data-close>Отменить</button>
+        <button type="submit" class="primary">Присоединиться</button>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- Sticker Picker Modal -->
+<div class="modal hidden" id="stickerModal">
+  <div class="modal-content sticker-modal-content">
+    <div class="sticker-modal-header">
+      <h2>Выбор стикеров</h2>
+      <input type="text" class="sticker-search" placeholder="Поиск стикеров..." id="stickerSearch">
+    </div>    <div class="sticker-tabs">
+      <button class="sticker-tab active" data-pack="recent" title="Recent">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+        </svg>
+      </button>
+      <button class="sticker-tab" data-pack="emotions" title="Emotions">😊</button>
+      <button class="sticker-tab" data-pack="animals" title="Animals">🐼</button>
+      <button class="sticker-tab" data-pack="food" title="Food">🍕</button>
+      <button class="sticker-tab" data-pack="activities" title="Activities">⚽</button>
+      <button class="sticker-tab" data-pack="custom" title="Custom">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 5v14M5 12h14"/>
+        </svg>
+      </button>
+    </div>
+    <div class="sticker-search">
+      <input type="text" class="sticker-search-input" placeholder="Search stickers..." id="stickerSearchInput">
+    </div>
+    <div class="sticker-content">
+      <!-- Recent Stickers -->
+      <div class="sticker-pack active" data-pack-content="recent">
+        <div class="sticker-pack-header">
+          <h4>Recently Used</h4>
+        </div>
+        <div class="sticker-grid" id="recentStickers">
+          <div class="empty-stickers">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="9" cy="9" r="2"/><circle cx="15" cy="9" r="2"/>
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+            <p>No recent stickers</p>
+            <span>Start using stickers to see them here</span>
+          </div>
+        </div>
+      </div>
+      <!-- Emotions Pack -->
+      <div class="sticker-pack" data-pack-content="emotions">
+        <div class="sticker-pack-header">
+          <h4>Emotions & Expressions</h4>
+          <button class="btn-favorite" data-pack="emotions" aria-label="Добавить в избранное">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="sticker-grid">
+          <button class="sticker-item" data-sticker="😊" title="Smiling">😊</button>
+          <button class="sticker-item" data-sticker="😂" title="Laughing">😂</button>
+          <button class="sticker-item" data-sticker="🥰" title="Love">🥰</button>
+          <button class="sticker-item" data-sticker="😎" title="Cool">😎</button>
+          <button class="sticker-item" data-sticker="🤔" title="Thinking">🤔</button>
+          <button class="sticker-item" data-sticker="😴" title="Sleepy">😴</button>
+          <button class="sticker-item" data-sticker="🤗" title="Hugging">🤗</button>
+          <button class="sticker-item" data-sticker="😇" title="Angel">😇</button>
+          <button class="sticker-item" data-sticker="🤩" title="Star Eyes">🤩</button>
+          <button class="sticker-item" data-sticker="😱" title="Shocked">😱</button>
+          <button class="sticker-item" data-sticker="😭" title="Crying">😭</button>
+          <button class="sticker-item" data-sticker="😤" title="Frustrated">😤</button>
+          <button class="sticker-item" data-sticker="🥳" title="Party">🥳</button>
+          <button class="sticker-item" data-sticker="😏" title="Smirk">😏</button>
+          <button class="sticker-item" data-sticker="🤐" title="Zipper">🤐</button>
+          <button class="sticker-item" data-sticker="🥱" title="Yawning">🥱</button>
+        </div>
+      </div>
+      <!-- Animals Pack -->
+      <div class="sticker-pack" data-pack-content="animals">
+        <div class="sticker-pack-header">
+          <h4>Animals & Nature</h4>
+          <button class="btn-favorite" data-pack="animals" aria-label="Добавить в избранное">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="sticker-grid">
+          <button class="sticker-item" data-sticker="🐶" title="Dog">🐶</button>
+          <button class="sticker-item" data-sticker="🐱" title="Cat">🐱</button>
+          <button class="sticker-item" data-sticker="🐼" title="Panda">🐼</button>
+          <button class="sticker-item" data-sticker="🦊" title="Fox">🦊</button>
+          <button class="sticker-item" data-sticker="🐻" title="Bear">🐻</button>
+          <button class="sticker-item" data-sticker="🐨" title="Koala">🐨</button>
+          <button class="sticker-item" data-sticker="🐯" title="Tiger">🐯</button>
+          <button class="sticker-item" data-sticker="🦁" title="Lion">🦁</button>
+          <button class="sticker-item" data-sticker="🐰" title="Rabbit">🐰</button>
+          <button class="sticker-item" data-sticker="🐹" title="Hamster">🐹</button>
+          <button class="sticker-item" data-sticker="🐸" title="Frog">🐸</button>
+          <button class="sticker-item" data-sticker="🐢" title="Turtle">🐢</button>
+          <button class="sticker-item" data-sticker="🦄" title="Unicorn">🦄</button>
+          <button class="sticker-item" data-sticker="🐝" title="Bee">🐝</button>
+          <button class="sticker-item" data-sticker="🦋" title="Butterfly">🦋</button>
+          <button class="sticker-item" data-sticker="🐙" title="Octopus">🐙</button>
+        </div>
+      </div>
+      <!-- Food Pack -->
+      <div class="sticker-pack" data-pack-content="food">
+        <div class="sticker-pack-header">
+          <h4>Food & Drink</h4>
+          <button class="btn-favorite" data-pack="food" aria-label="Добавить в избранное">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="sticker-grid">
+          <button class="sticker-item" data-sticker="🍕" title="Pizza">🍕</button>
+          <button class="sticker-item" data-sticker="🍔" title="Burger">🍔</button>
+          <button class="sticker-item" data-sticker="🍟" title="Fries">🍟</button>
+          <button class="sticker-item" data-sticker="🌭" title="Hot Dog">🌭</button>
+          <button class="sticker-item" data-sticker="🍿" title="Popcorn">🍿</button>
+          <button class="sticker-item" data-sticker="🍩" title="Donut">🍩</button>
+          <button class="sticker-item" data-sticker="🍰" title="Cake">🍰</button>
+          <button class="sticker-item" data-sticker="🎂" title="Birthday">🎂</button>
+          <button class="sticker-item" data-sticker="🍦" title="Ice Cream">🍦</button>
+          <button class="sticker-item" data-sticker="🍫" title="Chocolate">🍫</button>
+          <button class="sticker-item" data-sticker="🍪" title="Cookie">🍪</button>
+          <button class="sticker-item" data-sticker="☕" title="Coffee">☕</button>
+          <button class="sticker-item" data-sticker="🍵" title="Tea">🍵</button>
+          <button class="sticker-item" data-sticker="🥤" title="Soda">🥤</button>
+          <button class="sticker-item" data-sticker="🍺" title="Beer">🍺</button>
+          <button class="sticker-item" data-sticker="🍷" title="Wine">🍷</button>
+        </div>
+      </div>
+      <!-- Activities Pack -->
+      <div class="sticker-pack" data-pack-content="activities">
+        <div class="sticker-pack-header">
+          <h4>Activities & Sports</h4>
+          <button class="btn-favorite" data-pack="activities" aria-label="Добавить в избранное">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="sticker-grid">
+          <button class="sticker-item" data-sticker="⚽" title="Soccer">⚽</button>
+          <button class="sticker-item" data-sticker="🏀" title="Basketball">🏀</button>
+          <button class="sticker-item" data-sticker="🏈" title="Football">🏈</button>
+          <button class="sticker-item" data-sticker="⚾" title="Baseball">⚾</button>
+          <button class="sticker-item" data-sticker="🎾" title="Tennis">🎾</button>
+          <button class="sticker-item" data-sticker="🏐" title="Volleyball">🏐</button>
+          <button class="sticker-item" data-sticker="🎮" title="Gaming">🎮</button>
+          <button class="sticker-item" data-sticker="🎯" title="Darts">🎯</button>
+          <button class="sticker-item" data-sticker="🎲" title="Dice">🎲</button>
+          <button class="sticker-item" data-sticker="🎭" title="Theater">🎭</button>
+          <button class="sticker-item" data-sticker="🎨" title="Art">🎨</button>
+          <button class="sticker-item" data-sticker="🎸" title="Guitar">🎸</button>
+          <button class="sticker-item" data-sticker="🎹" title="Piano">🎹</button>
+          <button class="sticker-item" data-sticker="🎤" title="Microphone">🎤</button>
+          <button class="sticker-item" data-sticker="🎧" title="Headphones">🎧</button>
+          <button class="sticker-item" data-sticker="📚" title="Books">📚</button>
+        </div>
+      </div>
+      <!-- Custom Pack -->
+      <div class="sticker-pack" data-pack-content="custom">
+        <div class="sticker-pack-header">
+          <h4>Custom Sticker Packs</h4>
+        </div>
+        <div class="custom-stickers-info">
+          <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 5v14M5 12h14"/>
+          </svg>
+          <h4>Create Your Own Stickers</h4>
+          <p>Upload custom sticker packs and use them in conversations</p>
+          <button class="btn-primary" id="uploadStickerPackBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+            </svg>
+            Upload Sticker Pack
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="sticker-modal-footer">
+      <p class="sticker-hint">Нажмите на стикер чтобы отправить его</p>
+    </div>
+  </div>
+</div>
+<!-- Recording Modal -->
+<div class="modal hidden" id="recordingModal">
+  <div class="modal-content recording-modal-content">
+    <button type="button" class="icon-btn modal-close-btn" data-close aria-label="Cancel">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    <div class="recording-header">
+      <h3 id="recordingTitle">Голосовое сообщение</h3>
+    </div>
+    <div class="recording-body">
+      <!-- Video preview for video circles -->
+      <video id="recordingVideoPreview" class="recording-video-preview hidden" autoplay muted playsinline></video>
+      <!-- Waveform canvas for audio -->
+      <canvas id="recordingWaveform" class="recording-waveform hidden" width="300" height="100"></canvas>
+      <!-- Recording indicator -->
+      <div class="recording-indicator">
+        <div class="recording-dot"></div>
+        <span class="recording-timer" id="recordingTimer">00:00</span>
+      </div>
+    </div>
+    <div class="recording-footer">
+      <button type="button" class="btn-ghost" id="cancelRecordingBtn">Отмена</button>
+      <button type="button" class="btn-primary" id="stopRecordingBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="6" y="6" width="12" height="12"/>
+        </svg>
+        Остановить
+      </button>
+      <button type="button" class="btn-primary hidden" id="sendRecordingBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+        Отправить
+      </button>
+    </div>
+  </div>
+</div>
+<!-- Call Modal -->
+<div class="modal hidden" id="callModal">
+  <div class="modal-content call-modal-content">
+    <div class="call-header">
+      <h3 id="callTitle">Звонок</h3>
+      <p class="call-status" id="callStatus">Соединение...</p>
+      <p class="call-timer" id="callTimer">00:00</p>
+    </div>
+    <div class="call-videos">
+      <!-- Remote video (main) -->
+      <video id="remoteVideo" class="remote-video" autoplay playsinline></video>
+      <!-- Local video (picture-in-picture) -->
+      <video id="localVideo" class="local-video" autoplay playsinline muted></video>
+    </div>
+    <!-- Incoming call controls -->
+    <div class="incoming-call-controls hidden" id="incomingCallControls">
+      <button class="call-control-btn accept-btn" id="acceptCallBtn" title="Принять звонок">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+      </button>
+      <button class="call-control-btn reject-btn" id="rejectCallBtn" title="Отклонить звонок">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+          <line x1="18" y1="6" x2="6" y2="18" stroke="white" stroke-width="2"/>
+        </svg>
+      </button>
+    </div>
+    <!-- Active call controls -->
+    <div class="call-controls" id="activeCallControls">
+      <button class="call-control-btn" id="muteCallBtn" title="Выключить микрофон">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+          <line x1="12" y1="19" x2="12" y2="23"/>
+          <line x1="8" y1="23" x2="16" y2="23"/>
+        </svg>
+      </button>
+      <button class="call-control-btn" id="toggleVideoBtn" title="Выключить камеру">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M23 7l-7 5 7 5V7z"/>
+          <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+        </svg>
+      </button>
+      <button class="call-control-btn" id="shareScreenBtn" title="Демонстрация экрана">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+          <line x1="8" y1="21" x2="16" y2="21"/>
+          <line x1="12" y1="17" x2="12" y2="21"/>
+          <polyline points="12 10 8 14 12 14 12 10 16 14 12 14"/>
+        </svg>
+      </button>
+      <button class="call-control-btn hangup-btn" id="hangupBtn" title="Завершить звонок">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+          <line x1="18" y1="6" x2="6" y2="18" stroke="white" stroke-width="2"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="toast hidden" id="toast"></div>

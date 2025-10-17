@@ -1,0 +1,196 @@
+.inbox-panel {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border-default);
+}
+.inbox-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+  padding: 0 var(--space-2);
+  border-bottom: 1px solid var(--border-default);
+}
+.workspace-title {
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+.header-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.inbox-tabs {
+  display: flex;
+  gap: var(--space-1);
+  padding: var(--space-2);
+  border-bottom: 1px solid var(--border-default);
+}
+.tab-btn {
+  flex: 1;
+  height: 36px;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-small);
+  font-size: 13px;
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.tab-btn svg {
+  width: 16px;
+  height: 16px;
+  opacity: 0.7;
+  transition: opacity var(--transition-fast);
+}
+.tab-btn:hover {
+  background: var(--state-hover);
+  color: var(--text-primary);
+}
+.tab-btn:hover svg {
+  opacity: 1;
+}
+.tab-btn.active {
+  background: var(--bg-panel);
+  color: var(--text-primary);
+}
+.tab-btn.active svg {
+  opacity: 1;
+}
+.tab-badge {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  background: var(--accent-gradient);
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: var(--font-weight-semibold);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.chat-stack {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-1);
+}
+.chat-card {
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border-radius: var(--radius-default);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  margin-bottom: var(--space-1);
+  position: relative;
+}
+.chat-card:hover {
+  background: var(--state-hover);
+}
+.chat-card.active {
+  background: var(--bg-panel);
+}
+.chat-card.unread::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 24px;
+  background: var(--accent-gradient);
+  border-radius: 0 2px 2px 0;
+}
+.chat-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--accent-gradient);
+  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
+}
+.chat-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.chat-avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+.chat-avatar-initials {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+.chat-info {
+  flex: 1;
+  min-width: 0;
+}
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.chat-name {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.chat-time {
+  font-size: var(--font-size-meta);
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+.chat-preview {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-1);
+}
+.chat-last-message {
+  font-size: var(--font-size-body);
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+.chat-unread-pill {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  background: var(--accent-gradient);
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: var(--font-weight-semibold);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.header-actions {
+  display: flex;
+  gap: var(--space-1);
+}
+.chat-stack::-webkit-scrollbar,
+.chat-stack::-webkit-scrollbar-track,
+.chat-stack::-webkit-scrollbar-thumb,
+.chat-stack::-webkit-scrollbar-thumb:hover,

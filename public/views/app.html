@@ -1,0 +1,204 @@
+﻿<!-- ORION MESSENGER - Radically Different Main Window -->
+<div class="orion-shell hidden" id="appShell">
+  <!-- LEFT: 72px Icon Rail -->
+  <nav class="icon-rail" role="navigation" aria-label="Главная навигация">
+    <div class="rail-items">
+      <button class="rail-button active" data-view="home" aria-label="Главная" title="Главная">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+      </button>
+    </div>
+    <div class="rail-footer">
+      <button class="rail-button" id="logoutBtn" aria-label="Выход" title="Выход из аккаунта">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+          <polyline points="16 17 21 12 16 7"/>
+          <line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+      </button>
+      <button class="rail-avatar" id="userAvatar" aria-label="Профиль" title="Профиль">
+        <div class="avatar-ring"></div>
+      </button>
+    </div>
+  </nav>
+  <!-- MIDDLE: 320px Smart Inbox -->
+  <aside class="inbox-panel">
+    <div class="inbox-header">
+      <h1 class="workspace-title">Orion</h1>
+      <div class="header-actions">
+        <button class="icon-btn" id="joinByCodeBtn" aria-label="Join by code" title="Присоединиться по коду">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+            <polyline points="10 17 15 12 10 7"/>
+            <line x1="15" y1="12" x2="3" y2="12"/>
+          </svg>
+        </button>
+        <button class="icon-btn" id="composeBtn" aria-label="New message" title="New message (N)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 5v14M5 12h14"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="inbox-tabs">
+      <button class="tab-btn active" data-filter="all">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        </svg>
+        Все
+      </button>
+      <button class="tab-btn" data-filter="direct">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+        Личные
+      </button>
+      <button class="tab-btn" data-filter="group">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+        Беседы
+      </button>
+    </div>
+    <div class="chat-stack" id="chatStack">
+      <!-- Chat cards will be injected here -->
+    </div>
+  </aside>
+  <!-- CENTER: Conversation Canvas -->
+  <main class="conversation-canvas">
+    <div class="canvas-empty" id="canvasEmpty">
+      <svg width="120" height="120" viewBox="0 0 120 120" fill="none" class="empty-illustration">
+        <rect x="20" y="30" width="80" height="60" rx="8" stroke="#242B3A" stroke-width="2"/>
+        <circle cx="40" cy="50" r="8" fill="#242B3A"/>
+        <rect x="54" y="46" width="40" height="8" rx="4" fill="#242B3A"/>
+        <rect x="30" y="66" width="60" height="6" rx="3" fill="#1A2030"/>
+      </svg>
+      <p class="empty-title">Выберите беседу</p>
+      <p class="empty-hint">Нажмите <kbd>⌘K</kbd> чтобы открыть палитру команд</p>
+    </div>
+    <div class="canvas-conversation hidden" id="canvasConversation">
+      <header class="conversation-header">
+        <div class="header-info">
+          <div class="conversation-avatar clickable" id="convAvatar"></div>
+          <div class="header-text">
+            <h2 class="conversation-title" id="convTitle">Design Guild</h2>
+            <p class="conversation-meta" id="convMeta">12 members • 3 online</p>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button class="icon-btn" id="audioCallBtn" aria-label="Звонок" title="Аудио звонок">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+          </button>
+          <button class="icon-btn" id="videoCallBtn" aria-label="Видео" title="Видео звонок">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="23 7 16 12 23 17 23 7"/>
+              <rect x="1" y="5" width="15" height="14" rx="2"/>
+            </svg>
+          </button>
+          <!-- V2.0 Search Button -->
+          <button class="icon-btn" id="searchConversationBtn" aria-label="Поиск" title="Поиск в беседе (Ctrl+F)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.35-4.35"/>
+            </svg>
+          </button>
+          <!-- V2.0 Pinned Messages Button -->
+          <button class="icon-btn" id="viewPinnedBtn" aria-label="Закреплённые" title="Закреплённые сообщения (Ctrl+P)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 17v5"/>
+              <path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V17a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/>
+            </svg>
+          </button>
+          <button class="icon-btn" id="conversationSettingsBtn" aria-label="Настройки" title="Настройки беседы">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M12 1v6m0 6v6m5.66-17.66l-4.24 4.24m0 6v0l-4.24 4.24m12.73-7.59l-6 6m-6 0l-6-6"/>
+            </svg>
+          </button>
+        </div>
+      </header>
+      <div class="messages-wrapper">
+        <div class="messages-area" id="messagesArea">
+          <div class="messages-scroll" id="messagesScroll">
+            <!-- Messages will be injected here -->
+          </div>
+        </div>
+        <div class="composer-container">
+          <!-- Reply preview -->
+          <div class="reply-preview hidden" id="replyPreview">
+            <div class="reply-preview-content">
+              <div class="reply-preview-header">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9 14L4 9l5-5M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5v0a5.5 5.5 0 0 1-5.5 5.5H11"/>
+                </svg>
+                <span>Ответ на</span>
+                <span id="replyPreviewAuthor" class="reply-preview-author"></span>
+              </div>
+              <p id="replyPreviewText" class="reply-preview-text"></p>
+            </div>
+            <button class="reply-preview-close" id="replyPreviewClose" aria-label="Отменить ответ">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </button>
+          </div>
+          <p class="composer-hint"><kbd>Enter</kbd> отправить • <kbd>Shift+Enter</kbd> новая строка • <kbd>⌘K</kbd> команды</p>
+          <div class="composer">
+            <button class="composer-btn" id="attachBtn" aria-label="Прикрепить" title="Прикрепить файлы">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/>
+              </svg>
+            </button>
+            <div class="composer-input-wrapper">
+              <textarea class="composer-input" 
+                        id="messageInput" 
+                        rows="1"
+                        placeholder="Напишите сообщение..."
+                        aria-label="Сообщение"></textarea>
+            </div>
+            <button class="composer-btn" id="emojiBtn" aria-label="Эмодзи" title="Выбрать эмодзи">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                <line x1="9" y1="9" x2="9.01" y2="9"/>
+                <line x1="15" y1="9" x2="15.01" y2="9"/>
+              </svg>
+            </button>
+            <button class="composer-btn" id="stickerBtn" aria-label="Стикеры" title="Отправить стикер">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+                <path d="M12 16s-4-4-4-8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 4-4 8-4 8z"/>
+              </svg>
+            </button>
+            <button class="composer-btn" id="voiceBtn" aria-label="Голосовое сообщение" title="Записать голосовое сообщение">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                <line x1="12" y1="19" x2="12" y2="23"/>
+                <line x1="8" y1="23" x2="16" y2="23"/>
+              </svg>
+            </button>
+            <button class="composer-btn" id="videoBtn" aria-label="Видео-кружок" title="Записать видео-кружок">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/>
+              </svg>
+            </button>
+            <button class="composer-send" id="sendBtn" aria-label="Отправить" title="Отправить сообщение (Enter)">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
